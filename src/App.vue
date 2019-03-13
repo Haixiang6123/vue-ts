@@ -20,14 +20,16 @@ interface Todo {
         TodoList,
         NewTodo
     },
+    watch: {
+        list(newValue: Array<Todo>) {
+            localStorage.setItem('data', JSON.stringify(newValue))
+        }
+    }
 })
 export default class App extends Vue {
-    list: Array<Todo> = [
-        {name: 'Do homework', status: 'done'},
-        {name: 'Go sleep', status: 'todo'}
-    ]
+    list: Array<Todo> = localStorage.getItem('data') ? JSON.parse(<string>localStorage.getItem('data')) : []
 
-    addTodo(name: String) {
+    addTodo(name: string) {
         let todo: Todo = {
             name,
             status: 'todo'
